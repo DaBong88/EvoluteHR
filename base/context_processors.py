@@ -218,12 +218,12 @@ def white_labelling_company(request):
             company = hq
 
         return {
-            "white_label_company_name": company.company if company else "Horilla",
+            "white_label_company_name": company.company if company else "EvoluteHR",
             "white_label_company": company,
         }
     else:
         return {
-            "white_label_company_name": "Horilla",
+            "white_label_company_name": "EvoluteHR",
             "white_label_company": None,
         }
 
@@ -479,8 +479,8 @@ def horilla_version(request):
     """
     Expose the running product version to every template.
 
-    Until now `horilla/__version__.py` was read only by the build -- the Docker
-    label, and the CI check that the tag matches it. Nothing showed it to the
+    Until now `horilla/__version__.py` was read only by build and release
+    checks. Nothing showed it to the
     people running the product, so "which version are you on?" could not be
     answered from the screen. Support threads answered it with a branch name,
     which spans several releases and cannot say whether a given security fix is

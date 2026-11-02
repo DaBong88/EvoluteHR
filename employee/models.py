@@ -1459,6 +1459,43 @@ class ProfileEditFeature(HorillaModel):
     objects = models.Manager()
 
 
+class ReportingManagerChangeRequest(HorillaModel):
+    """A manager's auditable request to move a team member to a new manager."""
+
+    STATUS = (
+        ("requested", _("Requested")),
+        ("approved", _("Approved")),
+        ("declined", _("Declined")),
+    )
+
+    employee_id = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        related_name="reporting_change_requests",
+        verbose_name=_("Team member"),
+    )
+    current_manager_id = models.ForeignKey(
+        Employee,
+        on_delete=models.PROTECT,
+        related_name="reporting_change_requests_made",
+        verbose_name=_("Current manager"),
+    )
+    requested_manager_id = models.ForeignKey(
+        Employee,
+        on_delete=models.PROTECT,
+        related_name="reporting_change_requests_received",
+        verbose_name=_("Requested manager"),
+    )
+    reason = models.TextField(verbose_name=_("Reason"))
+    status = models.CharField(max_length=16, choices=STATUS, default="requested")
+    decision_note = models.TextField(blank=True, verbose_name=_("Decision note"))
+
+    class Meta:
+        ordering = ["-id"]
+        verbose_name = _("Reporting manager change request")
+        verbose_name_plural = _("Reporting manager change requests")
+
+
 ACCESSBILITY_FEATURE.append(("gender_chart", _("Can view Gender Chart")))
 ACCESSBILITY_FEATURE.append(("department_chart", _("Can view Department Chart")))
 ACCESSBILITY_FEATURE.append(("employees_chart", _("Can view Employees Chart")))

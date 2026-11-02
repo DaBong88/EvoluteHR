@@ -20,16 +20,16 @@ logger = logging.getLogger(__name__)
 # (user email, group name, company name)
 # Keep this small — enough to demo Roles & Permissions and company-scoped access.
 DEMO_ROLE_ASSIGNMENTS = (
-    ("alexander.smith@horilla.com", "Asset Manager", "Your Company"),
-    ("alexander.smith@horilla.com", "Asset Manager", "Your Company Inc."),
-    ("michael.brown@horilla.com", "HR Manager", "Your Company"),
-    ("sarah.anderson@horilla.com", "Payroll Manager", "Your Company"),
-    ("emily.clark@horilla.com", "Leave Manager", "Your Company"),
-    ("jessica.evans@horilla.com", "Attendance Manager", "Your Company"),
-    ("benjamin.parker@horilla.com", "Recruiter", "Your Company Ltd."),
-    ("lily.campbell@horilla.com", "Helpdesk Agent", "Your Company Inc."),
-    ("matthew.harris@horilla.com", "Performance Manager", "Your Company"),
-    ("david.king@horilla.com", "Project Manager", "Your Company"),
+    ("alexander.smith@evolutehr.local", "Asset Manager", "Your Company"),
+    ("alexander.smith@evolutehr.local", "Asset Manager", "Your Company Inc."),
+    ("michael.brown@evolutehr.local", "HR Manager", "Your Company"),
+    ("sarah.anderson@evolutehr.local", "Payroll Manager", "Your Company"),
+    ("emily.clark@evolutehr.local", "Leave Manager", "Your Company"),
+    ("jessica.evans@evolutehr.local", "Attendance Manager", "Your Company"),
+    ("benjamin.parker@evolutehr.local", "Recruiter", "Your Company Ltd."),
+    ("lily.campbell@evolutehr.local", "Helpdesk Agent", "Your Company Inc."),
+    ("matthew.harris@evolutehr.local", "Performance Manager", "Your Company"),
+    ("david.king@evolutehr.local", "Project Manager", "Your Company"),
 )
 
 

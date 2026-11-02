@@ -8,7 +8,7 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 from base.demo_data import run_enterprise_demo_seeder
-from base.demo_data.fixtures import demo_fixture_files
+from base.demo_data.fixtures import demo_fixture_files, sanitize_demo_fixture_text
 from base.demo_data.media import copy_demo_media
 from base.demo_roles import assign_demo_user_groups
 from base.views import (
@@ -78,16 +78,24 @@ class Command(BaseCommand):
             try:
                 reset_backfilled_rows_before_reload(fname)
                 shifted = _shift_fixture_dates(str(file_path))
-                if shifted is not None:
+                fixture_text = shifted if shifted is not None else file_path.read_text()
+                sanitized, removed_fields = sanitize_demo_fixture_text(fixture_text)
+                if shifted is not None or removed_fields:
                     suffix = file_path.suffix
                     with tempfile.NamedTemporaryFile(
                         mode="w", suffix=suffix, delete=False, encoding="utf-8"
                     ) as tmp_f:
-                        tmp_f.write(shifted)
+                        tmp_f.write(sanitized)
                         tmp = tmp_f.name
                     call_command("loaddata", tmp, verbosity=0)
                 else:
                     call_command("loaddata", str(file_path), verbosity=0)
+                if removed_fields:
+                    self.stdout.write(
+                        self.style.WARNING(
+                            f"  Removed {removed_fields} retired field(s): {fname}"
+                        )
+                    )
                 self.stdout.write(self.style.SUCCESS(f"  Loaded: {fname}"))
                 loaded += 1
             except Exception as e:

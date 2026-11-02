@@ -94,7 +94,7 @@ class PasswordResetDomainTests(TestCase):
         self.assertEqual(context["site_name"], "hr.acme-corp.test")
 
     def test_a_port_in_the_host_is_preserved(self):
-        """A Docker or dev install on a non-default port must keep it."""
+        """An install on a non-default port must keep it."""
         context = self._send("localhost:8000")
         self.assertEqual(context["domain"], "localhost:8000")
 

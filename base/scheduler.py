@@ -41,7 +41,7 @@ def update_rotating_work_type_assign(rotating_work_type, new_date):
     rotating_work_type.current_work_type = rotating_work_type.next_work_type
     rotating_work_type.next_work_type = next_work_type
     rotating_work_type.save()
-    bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+    bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
     if bot is not None:
         employee = rotating_work_type.employee_id
         notify.send(
@@ -150,7 +150,7 @@ def update_rotating_shift_assign(rotating_shift, new_date):
     rotating_shift.current_shift = rotating_shift.next_shift
     rotating_shift.next_shift = next_shift
     rotating_shift.save()
-    bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+    bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
     if bot is not None:
         employee = rotating_shift.employee_id
         notify.send(
@@ -263,7 +263,7 @@ def switch_shift():
             request.approved = True
             request.shift_changed = True
             request.save()
-            bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+            bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
             if bot is not None:
                 employee = request.employee_id
                 notify.send(
@@ -300,7 +300,7 @@ def undo_shift():
             # making the instance in-active
             request.is_active = False
             request.save()
-            bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+            bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
             if bot is not None:
                 employee = request.employee_id
                 notify.send(
@@ -337,7 +337,7 @@ def switch_work_type():
         request.approved = True
         request.work_type_changed = True
         request.save()
-        bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+        bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
         if bot is not None:
             employee = request.employee_id
             notify.send(
@@ -374,7 +374,7 @@ def undo_work_type():
         # making the instance is in-active
         request.is_active = False
         request.save()
-        bot = HorillaUser.objects.filter(username="Horilla Bot").first()
+        bot = HorillaUser.objects.filter(username="EvoluteHR Bot").first()
         if bot is not None:
             employee = request.employee_id
             notify.send(

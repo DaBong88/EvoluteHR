@@ -35,8 +35,10 @@ Thank you for considering contributing to Horilla! We welcome your input and app
      pip install -r requirements.txt
      pip install pre-commit
      pre-commit install
-     # Optional Docker stack:
-     make dev
+     cp .env.dist .env
+     # Configure DATABASE_URL for your PostgreSQL instance, then:
+     python manage.py migrate
+     python manage.py runserver
      ```
 
 5. **Make Changes**
@@ -55,7 +57,7 @@ Thank you for considering contributing to Horilla! We welcome your input and app
    - Target branch: **`dev/v2.0`**
    - GitHub defaults your PR’s base branch to `2.0` — manually change it to `dev/v2.0` before submitting.
    - Provide a clear title/description and link related issues
-   - CI should stay green: **Docker CI** + **Quality**
+   - CI should stay green: **Unit Tests** + **Quality**
 
 ## Code Style and Guidelines
 
@@ -102,7 +104,7 @@ Reviewing a diff that looks far larger than the change: `git diff
 
 | Workflow | What it checks |
 |----------|----------------|
-| `Docker CI` | Image build, migrate, collectstatic, `/health/`, `/ready/` |
+| `Unit Tests` | Migrations, unit-test coverage, and Django checks |
 | `Quality` | `ruff check .` over the whole repo, Black/isort on `horilla/settings` + `horilla/urls.py`, `manage.py check`, production settings gate |
 
 `ruff`'s enabled rule set is scoped to what the codebase already passes, so

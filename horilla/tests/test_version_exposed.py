@@ -1,7 +1,7 @@
 """The running version must be readable from the UI.
 
-`horilla/__version__.py` existed only for the build -- the Docker label and the
-CI check that the tag matches it. Nothing showed it to the people running the
+`horilla/__version__.py` existed only for build and release checks. Nothing
+showed it to the people running the
 product, so "which version are you on?" could not be answered from the screen.
 Support threads answered it with a branch name instead, which spans several
 releases and cannot tell you whether a given security fix is present. That is

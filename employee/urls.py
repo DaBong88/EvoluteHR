@@ -521,6 +521,36 @@ urlpatterns = [
     ),
     path("requests/", requests.requests_view, name="requests-view"),
     path(
+        "requests/job-requisition/",
+        requests.create_job_requisition,
+        name="manager-job-requisition-create",
+    ),
+    path(
+        "requests/team-leave/",
+        requests.create_team_leave_request,
+        name="manager-team-leave-create",
+    ),
+    path(
+        "requests/reporting-change/",
+        requests.create_reporting_manager_change,
+        name="manager-reporting-change-create",
+    ),
+    path(
+        "requests/reporting-change/<int:pk>/<str:decision>/",
+        requests.decide_reporting_manager_change,
+        name="manager-reporting-change-decide",
+    ),
+    path(
+        "requests/export/leave-requests/",
+        requests.export_team_leave_requests,
+        name="manager-team-leave-export",
+    ),
+    path(
+        "requests/export/absences/",
+        lambda request: requests.export_team_leave_requests(request, absences_only=True),
+        name="manager-team-absence-export",
+    ),
+    path(
         "requests/shift-request-tab/",
         requests.requests_shift_request_tab,
         name="requests-shift-request-tab",

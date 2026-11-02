@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 def health_check(request):
     """
-    Liveness probe — cheap, no dependency checks (Docker HEALTHCHECK).
+    Liveness probe — cheap, with no dependency checks.
 
     Also identifies the product and the API contract it speaks. Mobile and
     other API clients need to know whether a host is a Horilla server, and one
@@ -52,7 +52,7 @@ def health_check(request):
     capabilities payload.
     """
     return JsonResponse(
-        {"status": "ok", "product": "horilla", "api": API_VERSION}, status=200
+        {"status": "ok", "product": "evolutehr", "api": API_VERSION}, status=200
     )
 
 
@@ -71,7 +71,7 @@ def readiness_check(request):
     Readiness probe — verifies database (and Redis cache when REDIS_URL is set).
 
     Also reports whether the dedicated scheduler process has registered jobs.
-    ``/health/`` stays a cheap liveness check (Docker HEALTHCHECK).
+    ``/health/`` stays a cheap liveness check.
 
     The scheduler status is reported but does not fail the probe unless
     HORILLA_REQUIRE_SCHEDULER=1, which is off by default: a stopped scheduler
@@ -119,9 +119,8 @@ def metrics(request):
     """
     Prometheus scrape endpoint for the background job runner.
 
-    Staff-only. nginx also denies it from outside (see docker/nginx.conf) -- job
-    counts and failure rates are operational detail, not public information, and
-    `location /` would otherwise proxy this straight through.
+    Staff-only: job counts and failure rates are operational detail, not public
+    information. Configure any external reverse proxy to preserve this boundary.
     """
     from django.http import HttpResponse
 

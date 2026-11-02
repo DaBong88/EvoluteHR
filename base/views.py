@@ -419,7 +419,10 @@ def load_demo_database(request):
             if request.POST.get("load_data_password") == settings.DB_INIT_PASSWORD:
                 import tempfile
 
-                from base.demo_data.fixtures import demo_fixture_files
+                from base.demo_data.fixtures import (
+                    demo_fixture_files,
+                    sanitize_demo_fixture_text,
+                )
 
                 data_files = demo_fixture_files()
 
@@ -440,7 +443,15 @@ def load_demo_database(request):
                     try:
                         reset_backfilled_rows_before_reload(file)
                         shifted = _shift_fixture_dates(file_path)
-                        if shifted is not None:
+                        fixture_text = (
+                            shifted
+                            if shifted is not None
+                            else _Path(file_path).read_text()
+                        )
+                        sanitized, _removed_fields = sanitize_demo_fixture_text(
+                            fixture_text
+                        )
+                        if shifted is not None or _removed_fields:
                             suffix = path.splitext(file)[1]
                             with tempfile.NamedTemporaryFile(
                                 mode="w",
@@ -448,7 +459,7 @@ def load_demo_database(request):
                                 delete=False,
                                 encoding="utf-8",
                             ) as tmp_f:
-                                tmp_f.write(shifted)
+                                tmp_f.write(sanitized)
                                 tmp = tmp_f.name
                             call_command("loaddata", tmp)
                         else:
@@ -2031,7 +2042,7 @@ def mail_server_test_email(request):
     instance_id = request.GET.get("instance_id")
     white_labelling = getattr(settings, "WHITE_LABELLING", False)
     image_path = path.join(settings.STATIC_ROOT, "images/ui/horilla-logo.png")
-    company_name = "Horilla"
+    company_name = "EvoluteHR"
 
     if white_labelling:
         hq = Company.objects.filter(hq=True).last()
@@ -2053,7 +2064,7 @@ def mail_server_test_email(request):
         form = DynamicMailTestForm(request.POST)
         if form.is_valid():
             email_to = form.cleaned_data["to_email"]
-            subject = _("Test mail from Horilla")
+            subject = _("Test mail from EvoluteHR")
 
             # HTML content
             html_content = f"""
@@ -8672,10 +8683,8 @@ def protected_media(request, path):
     if not os.path.exists(media_path) or not os.path.isfile(media_path):
         raise Http404("File not found")
 
-    # Uploads never produce dot-files or dot-directories, but the Docker
-    # entrypoint persists the generated SECRET_KEY at media/.generated_secret_key
-    # so it survives restarts. Serving it would let any logged-in user forge
-    # sessions and JWTs, so refuse every hidden path outright.
+    # Uploads never produce dot-files or dot-directories. Hidden paths may hold
+    # operational files, so never serve them to authenticated users either.
     if any(part.startswith(".") for part in path.split("/")):
         raise Http404("File not found")
 

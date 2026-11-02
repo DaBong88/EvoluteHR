@@ -32,6 +32,7 @@ class HorillaAutomationConfig(AppConfig):
                 "compilemessages",
                 "flush",
                 "shell",
+                "load_demo_data",
             ]
         ):
             return ready

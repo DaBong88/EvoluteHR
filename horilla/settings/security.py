@@ -72,7 +72,7 @@ def apply_secure_defaults(env, debug: bool) -> dict:
     Return Django security-related settings for non-DEBUG deployments.
 
     SECURE_SSL_REDIRECT / HSTS stay off unless SECURE_SSL_REDIRECT=true so
-    plain-HTTP Docker + nginx :80 installs keep working.
+    plain-HTTP deployments keep working.
     """
     settings = {
         "SESSION_COOKIE_SECURE": True,

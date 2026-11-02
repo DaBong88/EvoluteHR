@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from django.apps import apps
 
 CORE_DEMO_FIXTURES = (
@@ -45,3 +47,47 @@ def demo_fixture_files() -> list[str]:
         f for app, f in SIDE_DEMO_FIXTURES if app is None or apps.is_installed(app)
     ]
     return files
+
+
+def sanitize_demo_fixture_text(fixture_text: str) -> tuple[str, int]:
+    """Remove fields retired from the current model schema.
+
+    The packaged demo data is intentionally kept across product releases, so a
+    fixture can occasionally outlive a model field.  Django's ``loaddata``
+    aborts the entire file in that case; filtering only unknown fields retains
+    the rest of the representative test data.
+    """
+    try:
+        records = json.loads(fixture_text)
+    except json.JSONDecodeError:
+        return fixture_text, 0
+
+    if not isinstance(records, list):
+        return fixture_text, 0
+
+    removed = 0
+    for record in records:
+        if not isinstance(record, dict) or not isinstance(record.get("fields"), dict):
+            continue
+
+        try:
+            model = apps.get_model(record["model"])
+        except (KeyError, LookupError, ValueError):
+            continue
+
+        valid_names = set()
+        for field in model._meta.get_fields():
+            if field.auto_created and not field.concrete:
+                continue
+            valid_names.add(field.name)
+            attname = getattr(field, "attname", None)
+            if attname:
+                valid_names.add(attname)
+
+        fields = record["fields"]
+        for name in tuple(fields):
+            if name not in valid_names:
+                fields.pop(name)
+                removed += 1
+
+    return json.dumps(records), removed

@@ -25,7 +25,7 @@ env = environ.Env(
     SECURE_SSL_REDIRECT=(bool, False),
 )
 
-# Existing process environment (Compose, systemd, CI) wins over .env values.
+# Existing process environment (such as systemd or CI) wins over .env values.
 env.read_env(os.path.join(BASE_DIR, ".env"), overwrite=False)
 
 # ========================================
@@ -263,9 +263,8 @@ connection_created.connect(_configure_sqlite_connection)
 # ========================================
 # CACHE (optional Redis when REDIS_URL is set)
 # ========================================
-# Fresh clones / runserver keep Django's default LocMem cache.
-# Docker Compose sets REDIS_URL so the Redis service is actually used
-# (requires django-redis in requirements.txt).
+# Fresh clones keep Django's default LocMem cache. Set REDIS_URL to use an
+# externally managed Redis service (requires django-redis in requirements.txt).
 if REDIS_URL:
     CACHES = {
         "default": {
@@ -448,7 +447,7 @@ WHITE_LABELLING = False
 NESTED_SUBORDINATE_VISIBILITY = False
 TWO_FACTORS_AUTHENTICATION = False
 # When True, /ready/ returns 503 until run_scheduler has registered jobs.
-# Off by default so Docker CI (web without the scheduler service) still passes.
+# Off by default so deployments can introduce the scheduler independently.
 HORILLA_REQUIRE_SCHEDULER = env.bool("HORILLA_REQUIRE_SCHEDULER", default=False)
 
 SIDEBARS = [
@@ -646,8 +645,8 @@ AXES_ENABLE_ADMIN = True
 AXES_IPWARE_PROXY_COUNT = env.int("AXES_PROXY_COUNT", default=None)
 # With no proxy count declared, ipware takes the first X-Forwarded-For value
 # as-is, so a client could send a fresh header per attempt and the IP half of
-# the lock never matches. Read the header only when AXES_PROXY_COUNT is set;
-# the shipped compose sets it to 1 for its nginx.
+# the lock never matches. Read the header only when AXES_PROXY_COUNT is set by
+# a trusted reverse proxy.
 AXES_IPWARE_META_PRECEDENCE_ORDER = (
     ["HTTP_X_FORWARDED_FOR"] if AXES_IPWARE_PROXY_COUNT else []
 ) + ["REMOTE_ADDR"]

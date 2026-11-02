@@ -12,9 +12,8 @@ here — they predate this convention and back-filling them would misrepresent h
 were recorded at the time.
 
 Each released version corresponds to a git tag of the same name (bare semver, no `v`
-prefix) and to the Docker tag `horilla/horilla-hr:<version>`. `horilla/__version__.py`
-is the single source of truth; the release workflow refuses to publish an image whose
-tag disagrees with it.
+prefix). `horilla/__version__.py` is the single source of truth for the product
+version.
 
 ## [Unreleased]
 
@@ -156,12 +155,6 @@ exists to put migration state back in step with the models.
   stage cache miss, and a two-column layout bug in the Create/Update Task
   modals.
 
-- **The scheduler container reported itself unhealthy forever.** It reuses the
-  web image and inherited a `HEALTHCHECK` that curls `localhost:8000/health/`,
-  but it runs `run_scheduler` and binds no port, so the check could never pass.
-  Harmless under Compose; an orchestrator gating on health would have
-  restart-looped a service that was working correctly.
-
 - **`pip install -r requirements.txt` behaved differently across machines.**
   Four packages had no version floor at all, and `pandas` asks for a different
   `numpy` major above and below Python 3.14 — so the same file resolved
@@ -169,8 +162,7 @@ exists to put migration state back in step with the models.
   artifacts now carry a floor and a major cap, so pip can select a build that
   has a wheel for the interpreter in front of it instead of falling back to a
   source compile. Every pure-Python pin, and so every advisory pin, is
-  unchanged. The README now also upgrades pip before installing, which the
-  Dockerfile always did and the manual instructions never mentioned.
+  unchanged. The README now also upgrades pip before installing.
 
 - **PMS**: nested scrollbars in the OKR detailed view.
 
@@ -263,10 +255,6 @@ until now.
 ### Upgrading
 
 No migration or configuration change is required.
-
-```bash
-docker pull horilla/horilla-hr:2.1.5
-```
 
 ## [2.1.4] — 2026-09-08
 
@@ -379,10 +367,6 @@ again, and the edit endpoint accepts `requested_days`. Neither was in the report
 
 No migration or configuration change is required.
 
-```bash
-docker pull horilla/horilla-hr:2.1.3
-```
-
 ## [2.1.2] — 2026-09-07
 
 Security patch release. **Upgrading is recommended for all installations.**
@@ -424,10 +408,6 @@ If you drive Horilla through the REST API, check the two permission changes
 above before upgrading — an integration that wrote documents using only
 `horilla_documents.view_document` will start receiving 403.
 
-```bash
-docker pull horilla/horilla-hr:2.1.2
-```
-
 ## [2.1.1] — 2026-09-06
 
 Security patch release. **Upgrading is recommended for all installations.**
@@ -461,10 +441,6 @@ No migration or configuration change is required by this release.
 If you are upgrading from **2.0.x** and use the WhatsApp integration, note that
 [2.1.0](https://github.com/horilla/horilla-hr/releases/tag/2.1.0) requires a Meta App
 Secret — message delivery stops until it is set.
-
-```bash
-docker pull horilla/horilla-hr:2.1.1
-```
 
 [Unreleased]: https://github.com/horilla/horilla-hr/compare/2.1.7...HEAD
 [2.1.7]: https://github.com/horilla/horilla-hr/compare/2.1.6...2.1.7

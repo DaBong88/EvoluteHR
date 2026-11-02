@@ -586,7 +586,7 @@
                     </div>
                 {% else %}
                     <img
-                        src="{% if request.user.employee_get.employee_work_info.company_id.icon %}{{ request.user.employee_get.employee_work_info.company_id.icon.url }}{% else %}/static/horilla_theme/assets/img/horilla-logo.png{% endif %}"
+                        src="{% if request.user.employee_get.employee_work_info.company_id.icon %}{{ request.user.employee_get.employee_work_info.company_id.icon.url }}{% else %}{% static 'horilla_theme/assets/img/evolute-icon.png' %}{% endif %}"
                         alt="{% trans 'Company logo' %}"
                         class="oh-sidebar-label w-7 h-7 rounded-full flex-shrink-0"
                     >
@@ -690,7 +690,7 @@
             Collapses to just the number when the sidebar is unpinned.
         {% endcomment %}
         <div class="sidebar-version px-4 pt-3 pb-6 border-t border-t-dark-50 text-[11px] leading-none text-[#999] select-text"
-             title="{% trans 'Horilla HR version' %} {{ horilla_version }}">
+             title="{% trans 'EvoluteHR version' %} {{ horilla_version }}">
             <span class="sidebar-version__label">{% trans "Version" %}</span>
             <span class="font-medium">{{ horilla_version }}</span>
         </div>

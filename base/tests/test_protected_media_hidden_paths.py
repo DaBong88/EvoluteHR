@@ -1,7 +1,7 @@
 """
 protected_media serves any file under MEDIA_ROOT to any authenticated user.
-The Docker entrypoint persists the generated SECRET_KEY at
-media/.generated_secret_key, so hidden paths must 404 even when logged in.
+Hidden paths may contain operational files, so they must 404 even when logged
+in.
 """
 
 import os

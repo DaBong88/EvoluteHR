@@ -33,8 +33,8 @@ We aim to **acknowledge** valid reports within **72 hours**. Resolution time dep
 
 ### What to include
 
-- Affected Horilla HR **version** or commit / Docker tag
-- Environment notes (self-hosted Compose, reverse proxy, auth mode) — use variable *names* and redacted examples only
+- Affected Horilla HR **version** or commit
+- Environment notes (self-hosted installation, reverse proxy, auth mode) — use variable *names* and redacted examples only
 - Step-by-step reproduction (minimal PoC preferred)
 - Impact (who can exploit it, and what they gain)
 - Whether a fix or workaround is already known
@@ -63,7 +63,7 @@ We will normally **not** treat the following as Horilla product CVEs. We may sti
 | Privilege escalation by users who already administer users/roles | Trusted-admin capability by design |
 | Issues only on EOL Python or EOL Horilla versions | Upgrade to a supported line |
 | Pure deployment misconfiguration | Operator responsibility (`DEBUG=True`, open admin, weak secrets you set yourself). **Exception:** shipping an insecure default that works out of the box |
-| Media / static XSS when files are served outside documented secure paths | Follow Docker / deployment docs; do not bypass Django `protected_media` with a raw `/media/` alias |
+| Media / static XSS when files are served outside documented secure paths | Follow deployment documentation; do not bypass Django `protected_media` with a raw `/media/` alias |
 | Dependency CVEs with **no reachable path** in Horilla | Tracked via Dependabot when applicable |
 | Third-party plugins or custom code not shipped by Horilla | Report to that project’s maintainers |
 | Compromise of marketing sites, email, or social accounts | Operational incident response — not a product advisory |

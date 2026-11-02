@@ -229,8 +229,75 @@ def employee_profile(request):
             )
             return redirect("employee-view")
 
-    today = datetime.today()
+    today = timezone.localdate()
     now = timezone.now()
+    work_info = getattr(employee, "employee_work_info", None)
+
+    # Keep the employee home resilient when optional Horilla apps are disabled.
+    # Each collection is intentionally small: this page is an overview, while
+    # the existing app destinations remain the system of record.
+    leave_balances = []
+    upcoming_absences = []
+    if apps.is_installed("leave"):
+        AvailableLeave = apps.get_model("leave", "AvailableLeave")
+        LeaveRequest = apps.get_model("leave", "LeaveRequest")
+        leave_balances = list(
+            AvailableLeave.objects.filter(employee_id=employee)
+            .select_related("leave_type_id")
+            .order_by("leave_type_id__name")[:4]
+        )
+        upcoming_absences = list(
+            LeaveRequest.objects.filter(
+                employee_id=employee,
+                status="approved",
+                end_date__gte=today,
+            )
+            .select_related("leave_type_id")
+            .order_by("start_date")[:3]
+        )
+
+    objectives = []
+    feedback_cycles = []
+    if apps.is_installed("pms"):
+        EmployeeObjective = apps.get_model("pms", "EmployeeObjective")
+        Feedback = apps.get_model("pms", "Feedback")
+        objectives = list(
+            EmployeeObjective.objects.filter(employee_id=employee, archive=False)
+            .order_by("-updated_at")[:3]
+        )
+        feedback_cycles = list(
+            Feedback.objects.filter(employee_id=employee, archive=False)
+            .order_by("-end_date")[:3]
+        )
+
+    contract = None
+    if apps.is_installed("payroll"):
+        Contract = apps.get_model("payroll", "Contract")
+        contract = (
+            Contract.objects.filter(employee_id=employee)
+            .order_by("-contract_start_date")
+            .first()
+        )
+
+    service_days = None
+    if work_info and work_info.date_joining:
+        service_days = max((today - work_info.date_joining).days, 0)
+
+    profile_fields = [
+        employee.employee_profile,
+        employee.email,
+        employee.phone,
+        employee.address,
+        employee.emergency_contact,
+        getattr(work_info, "department_id", None),
+        getattr(work_info, "job_position_id", None),
+        getattr(work_info, "reporting_manager_id", None),
+        getattr(work_info, "date_joining", None),
+        getattr(work_info, "location", None),
+    ]
+    profile_completion = round(
+        (sum(bool(value) for value in profile_fields) / len(profile_fields)) * 100
+    )
     return render(
         request,
         "employee/profile/profile_view.html",
@@ -238,6 +305,14 @@ def employee_profile(request):
             "employee": employee,
             "current_date": today,
             "now": now,
+            "work_info": work_info,
+            "leave_balances": leave_balances,
+            "upcoming_absences": upcoming_absences,
+            "objectives": objectives,
+            "feedback_cycles": feedback_cycles,
+            "contract": contract,
+            "service_days": service_days,
+            "profile_completion": profile_completion,
         },
     )
 

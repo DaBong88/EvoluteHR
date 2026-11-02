@@ -1,0 +1,318 @@
+/* EvoluteHR workspace skin — derived from the supplied Notion design system.
+   The visual language is intentionally restrained: navy navigation provides the
+   signature brand band; purple is reserved for decisive actions; pastel cards
+   communicate the state of work rather than decorate empty space. */
+:root {
+  --ev-primary: #5645d4;
+  --ev-primary-pressed: #4534b3;
+  --ev-navy: #0a1530;
+  --ev-navy-deep: #070f24;
+  --ev-canvas: #ffffff;
+  --ev-surface: #f6f5f4;
+  --ev-surface-soft: #fafaf9;
+  --ev-hairline: #e5e3df;
+  --ev-hairline-strong: #c8c4be;
+  --ev-ink: #1a1a1a;
+  --ev-charcoal: #37352f;
+  --ev-slate: #5d5b54;
+  --ev-steel: #787671;
+  --ev-lavender: #e6e0f5;
+  --ev-sky: #dcecfa;
+  --ev-mint: #d9f3e1;
+  --ev-peach: #ffe8d4;
+  --ev-rose: #fde0ec;
+  --ev-yellow: #f9e79f;
+  --ev-radius-control: 8px;
+  --ev-radius-card: 12px;
+  --primary-100: #f0edff;
+  --primary-200: #e6e0f5;
+  --primary-300: #d6b6f6;
+  --primary-500: #8d7ce3;
+  --primary-600: #5645d4;
+  --primary-700: #4534b3;
+  --primary-800: #3a2a99;
+}
+
+html, body, button, input, select, textarea { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important; }
+body { background: var(--ev-surface) !important; color: var(--ev-charcoal) !important; }
+body:not(.dark) .bg-\[\#FEF6F5\], body:not(.dark) .bg-\[\#FFF5F1\] { background-color: var(--ev-surface) !important; }
+
+/* Navigation is a light index: quietly present, with purple kept for the
+   current workspace rather than becoming a second dark visual field. */
+#sidebar, #sidebarFlyout { --sidebar-accent: var(--ev-primary) !important; --sidebar-accent-dark: var(--ev-primary-pressed) !important; --sidebar-accent-soft: var(--ev-lavender) !important; background: var(--ev-surface-soft) !important; border-right: 1px solid var(--ev-hairline) !important; }
+#sidebar { box-shadow: none !important; }
+#sidebar .oh-sidebar__company-title, #sidebar .sidebar-version, #sidebar .oh-sidebar-label, #sidebar .sidebar-chevron { color: var(--ev-charcoal) !important; }
+#sidebar .oh-sidebar__company-link { color: var(--ev-steel) !important; }
+#sidebar .sideboxmain { border-radius: var(--ev-radius-control) !important; background: transparent !important; }
+#sidebar .sideboxmain:hover:not(.sidebox-current), #sidebar .sideboxmain.sidebox-active:not(.sidebox-current) { background: var(--ev-lavender) !important; }
+#sidebar .sideboxmain:hover:not(.sidebox-current) .oh-sidebar-label, #sidebar .sideboxmain.sidebox-active:not(.sidebox-current) .oh-sidebar-label { color: var(--ev-primary) !important; }
+#sidebar .sideboxmain.sidebox-current, #sidebar .oh-sidebar-active-link { background: var(--ev-primary) !important; box-shadow: none !important; }
+#sidebar .sideboxmain.sidebox-current .oh-sidebar-label, #sidebar .sideboxmain.sidebox-current .sidebar-chevron { color: #fff !important; }
+#sidebar nav .sideboxmain img, #sidebar nav .sideboxmain svg:not(.sidebar-chevron) { filter: none !important; opacity: .72 !important; }
+#sidebar nav .sideboxmain.sidebox-current img, #sidebar nav .sideboxmain.sidebox-current svg:not(.sidebar-chevron) { filter: brightness(0) invert(1) !important; opacity: 1 !important; }
+#sidebar .sidebar-subnav-link:hover { background: var(--ev-lavender) !important; color: var(--ev-primary) !important; }
+#sidebar #sidebarPinBtn, #sidebar.sidebar-pinned #sidebarPinBtn { background: transparent !important; color: var(--ev-slate) !important; }
+
+/* Header and content frame. */
+.oh-main-content { background: var(--ev-surface) !important; }
+.oh-main-header { min-height: 72px; background: rgba(255,255,255,.94) !important; border-bottom: 1px solid var(--ev-hairline) !important; box-shadow: none !important; backdrop-filter: blur(14px); }
+.oh-main-header .bg-primary-100 { width: 40px !important; height: 40px !important; border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-control) !important; background: var(--ev-surface-soft) !important; color: var(--ev-primary) !important; }
+.oh-main-header .bg-primary-100:hover { background: var(--ev-primary) !important; color: #fff !important; }
+#ohMainContent { padding: 96px 28px 32px !important; }
+
+/* Shared controls. Purple is the decisive action; outlined controls stay quiet. */
+.oh-btn--secondary, .btn:not(.btn-light), .oh-btn--primary, .oh-btn[type="submit"] { border: 1px solid var(--ev-primary) !important; border-radius: var(--ev-radius-control) !important; background: var(--ev-primary) !important; color: #fff !important; box-shadow: none !important; font-weight: 600 !important; }
+.oh-btn--secondary:hover, .btn:not(.btn-light):hover, .oh-btn--primary:hover, .oh-btn[type="submit"]:hover { background: var(--ev-primary-pressed) !important; }
+.oh-btn--light-bkg, .oh-btn--light, .oh-btn--secondary-outline { border: 1px solid var(--ev-hairline-strong) !important; border-radius: var(--ev-radius-control) !important; background: #fff !important; color: var(--ev-ink) !important; }
+.oh-input, .oh-select, input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-height: 44px; border: 1px solid var(--ev-hairline-strong) !important; border-radius: var(--ev-radius-control) !important; background-color: #fff !important; color: var(--ev-ink) !important; box-shadow: none !important; }
+.oh-input:focus, .oh-select:focus, input:focus, select:focus, textarea:focus { border: 2px solid var(--ev-primary) !important; outline: none !important; box-shadow: 0 0 0 3px rgba(86,69,212,.12) !important; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--ev-primary) !important; }
+
+/* Reusable content primitives. */
+.oh-card, .oh-profile-section, .oh-modal__dialog, .oh-tabs__content, .sidebarModal { border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-card) !important; background: var(--ev-canvas) !important; box-shadow: none !important; }
+.oh-titlebar, .oh-main__titlebar { border-bottom-color: var(--ev-hairline) !important; }
+.breadcrumb li.oh-breadcrumb-current, .breadcrumb li a:hover, .md-link, .md-link-subtle { color: #0075de !important; }
+.oh-tabs__tab--active { border-color: var(--ev-primary) !important; background: var(--ev-primary) !important; color: #fff !important; }
+.oh-tabs__movable-header { border-radius: var(--ev-radius-control) !important; background: var(--ev-surface-soft) !important; }
+.oh-tabs__movable-header--active { border-bottom: 2px solid var(--ev-primary) !important; color: var(--ev-ink) !important; }
+
+/* Tables receive Notion's quiet database treatment. */
+.oh-sticky-table, .oh-table, .list-table { border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-card) !important; background: #fff !important; overflow: hidden; }
+.oh-sticky-table thead th, .oh-table thead th, .list-table .list-table-header { background: var(--ev-surface-soft) !important; color: var(--ev-slate) !important; font-size: 12px !important; font-weight: 600 !important; letter-spacing: .03em; text-transform: uppercase; }
+.oh-sticky-table td, .oh-table td, .list-table .list-table-row { border-color: var(--ev-hairline) !important; }
+.highlight-selected { background: var(--ev-lavender) !important; }
+
+/* Dashboard header: a calm, paper-like context line rather than a hero. */
+.md-dashboard { min-height: calc(100vh - 72px) !important; margin: -24px !important; padding: 28px !important; background: var(--ev-surface) !important; }
+.md-header { position: relative; min-height: 112px; margin: -28px -28px 28px !important; padding: 28px 36px 24px !important; overflow: visible; align-items: flex-start !important; border-bottom: 1px solid var(--ev-hairline) !important; background: var(--ev-canvas) !important; color: var(--ev-ink) !important; }
+.md-header::before, .md-header::after { display: none !important; }
+.md-header > * { z-index: 1; position: relative; }
+.md-header h1 { margin: 0 !important; color: var(--ev-ink) !important; font-size: clamp(28px, 3vw, 36px) !important; font-weight: 600 !important; letter-spacing: -.04em !important; line-height: 1.1 !important; }
+.md-header__date, .md-header .md-refresh { color: var(--ev-slate) !important; opacity: 1 !important; }
+.md-company-chip { display: inline-flex !important; margin-top: 10px !important; padding: 4px 9px !important; border: 1px solid var(--ev-hairline) !important; border-radius: 999px !important; background: var(--ev-surface-soft) !important; color: var(--ev-charcoal) !important; font-size: 12px !important; }
+.md-header #md-open-customize { border-color: var(--ev-hairline-strong) !important; background: #fff !important; color: var(--ev-ink) !important; }
+.md-header #md-open-customize:hover { border-color: var(--ev-primary) !important; background: var(--ev-lavender) !important; }
+
+.md-kpi-grid { gap: 16px !important; margin-bottom: 24px !important; }
+.md-kpi-card { min-height: 156px; padding: 20px !important; border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-card) !important; background: #fff !important; box-shadow: none !important; }
+.md-kpi-card:hover { transform: translateY(-1px) !important; box-shadow: 0 1px 2px rgba(15,15,15,.04) !important; }
+.md-kpi-card:nth-child(1) { background: var(--ev-lavender) !important; }
+.md-kpi-card:nth-child(2) { background: var(--ev-mint) !important; }
+.md-kpi-card:nth-child(3) { background: var(--ev-peach) !important; }
+.md-kpi-card:nth-child(4) { background: var(--ev-sky) !important; }
+.md-kpi-card::after { display: none !important; }
+.md-kpi-card__icon { width: 36px !important; height: 36px !important; margin-bottom: 14px !important; border-radius: var(--ev-radius-control) !important; background: rgba(255,255,255,.74) !important; color: var(--ev-primary) !important; }
+.md-kpi-card__label { color: var(--ev-slate) !important; font-size: 11px !important; font-weight: 600 !important; letter-spacing: .06em !important; opacity: 1 !important; }
+.md-kpi-card__value { color: var(--ev-ink) !important; font-size: 32px !important; font-weight: 600 !important; letter-spacing: -.04em !important; }
+.md-kpi-card__sub { color: var(--ev-charcoal) !important; opacity: .72 !important; }
+.md-badge { border-radius: 6px !important; background: rgba(255,255,255,.72) !important; color: var(--ev-charcoal) !important; font-weight: 600 !important; }
+
+.md-chart-grid { gap: 16px !important; }
+.md-chart-card, .md-info-panel { border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-card) !important; background: #fff !important; box-shadow: none !important; }
+.md-chart-card:hover { transform: none !important; box-shadow: 0 1px 2px rgba(15,15,15,.04) !important; }
+.md-chart-card::before { height: 2px !important; border-radius: var(--ev-radius-card) var(--ev-radius-card) 0 0 !important; }
+.md-chart-card[data-chart-section='overview']::before { background: var(--ev-primary) !important; }
+.md-chart-card[data-chart-section='attendance']::before { background: #2a9d99 !important; }
+.md-chart-card[data-chart-section='recruitment']::before { background: #dd5b00 !important; }
+.md-chart-card[data-chart-section='leave']::before { background: #0075de !important; }
+.md-chart-card__header { padding: 20px 20px 6px !important; }
+.md-chart-card__title, .md-info-panel__title { color: var(--ev-ink) !important; font-size: 15px !important; font-weight: 600 !important; letter-spacing: -.01em; }
+.md-chart-card__subtitle { color: var(--ev-slate) !important; font-size: 12px !important; opacity: 1 !important; }
+.md-chart-card__body { padding: 10px 16px 20px !important; }
+.md-section-divider { color: var(--ev-slate) !important; font-size: 12px !important; font-weight: 600 !important; letter-spacing: .06em; text-transform: uppercase; }
+.md-info-panel__header { padding: 16px 18px 12px !important; border-bottom-color: var(--ev-hairline) !important; }
+.md-info-panel__body { padding: 0 18px 14px !important; }
+.md-btn-add { border-color: var(--ev-hairline-strong) !important; border-radius: var(--ev-radius-control) !important; color: var(--ev-primary) !important; }
+.md-btn-add:hover { border-color: var(--ev-primary) !important; background: var(--ev-primary) !important; color: #fff !important; }
+.md-empty, .md-info-panel__empty { color: var(--ev-steel) !important; opacity: 1 !important; }
+.md-dashboard .apexcharts-xaxis text, .md-dashboard .apexcharts-yaxis text, .md-dashboard .apexcharts-legend-text { fill: var(--ev-slate) !important; }
+
+.md-customize-panel { border-left: 1px solid var(--ev-hairline) !important; background: #fff !important; box-shadow: -16px 0 48px -18px rgba(15,15,15,.18) !important; }
+.md-customize-panel__header, .md-customize-panel__footer { border-color: var(--ev-hairline) !important; }
+.md-cust-item { border-color: var(--ev-hairline) !important; border-radius: var(--ev-radius-control) !important; background: var(--ev-surface-soft) !important; }
+.md-cust-item.md-dragging, .md-cust-item.md-drag-over { border-color: var(--ev-primary) !important; }
+
+/* Authentication has its own sparse composition: a navy field with a single
+   white workspace card, instead of inheriting the application's old tint. */
+.evolute-auth-shell { position: relative; min-height: 100vh; overflow: hidden; background: var(--ev-navy) !important; }
+.evolute-auth-shell::before, .evolute-auth-shell::after { position: absolute; border: 1px solid rgba(255,255,255,.22); border-radius: 50%; content: ""; pointer-events: none; }
+.evolute-auth-shell::before { width: 480px; height: 480px; top: -250px; right: -130px; box-shadow: -410px 360px 0 -190px rgba(255,100,200,.95), -250px 270px 0 -202px #2a9d99, -80px 450px 0 -200px #f5d75e; }
+.evolute-auth-shell::after { width: 360px; height: 360px; bottom: -220px; left: -120px; }
+.evolute-auth-card { z-index: 1; position: relative; width: min(450px, calc(100vw - 40px)) !important; padding: 40px !important; border: 1px solid var(--ev-hairline) !important; border-radius: var(--ev-radius-card) !important; background: #fff !important; box-shadow: rgba(15,15,15,.20) 0 24px 48px -8px !important; }
+.evolute-auth-card h1 { color: var(--ev-ink) !important; font-size: 28px !important; font-weight: 600 !important; letter-spacing: -.035em; }
+.evolute-auth-card .text-color-600 { color: var(--ev-slate) !important; }
+.evolute-auth-card .bg-brand-600 { border-radius: var(--ev-radius-control) !important; background: var(--ev-primary) !important; font-weight: 600 !important; }
+.evolute-auth-card .bg-brand-600:hover { background: var(--ev-primary-pressed) !important; }
+.evolute-auth-card .text-\[red\] { color: #0075de !important; }
+
+/* First-run checklist is an operational workspace card, not a red alert. Its
+   yellow/mint palette gives setup a clear but calm visual priority. */
+.hcl-banner { border: 1px solid #e6d16f !important; border-radius: var(--ev-radius-card) !important; background: linear-gradient(135deg, var(--ev-yellow) 0%, #fff9dc 45%, #fff 100%) !important; box-shadow: none !important; }
+.hcl-blob { background: radial-gradient(circle, rgba(86,69,212,.16) 0%, transparent 70%) !important; }
+.hcl-icon { border-radius: var(--ev-radius-control) !important; background: var(--ev-primary) !important; }
+.hcl-title, .hcl-action-title { color: var(--ev-ink) !important; }
+.hcl-subtitle, .hcl-action-desc { color: var(--ev-slate) !important; }
+.hcl-line-active { background: var(--ev-primary) !important; }
+.hcl-line-inactive { background: rgba(90,84,70,.20) !important; }
+.hcl-circle-done { border-color: var(--ev-primary) !important; background: var(--ev-primary) !important; }
+.hcl-circle-active { border-color: var(--ev-primary) !important; box-shadow: 0 0 0 4px rgba(86,69,212,.16) !important; }
+.hcl-circle-pending { border-color: var(--ev-hairline-strong) !important; }
+.hcl-circle-num-active, .hcl-label-done { color: var(--ev-primary) !important; }
+.hcl-label-active { color: var(--ev-ink) !important; }
+.hcl-label-pending { color: var(--ev-steel) !important; }
+.hcl-action { border: 1px solid rgba(86,69,212,.28) !important; border-left: 4px solid var(--ev-primary) !important; border-radius: var(--ev-radius-control) !important; background: rgba(255,255,255,.78) !important; }
+.hcl-action-btn { border-radius: var(--ev-radius-control) !important; background: var(--ev-primary) !important; }
+.hcl-action-btn:hover { background: var(--ev-primary-pressed) !important; opacity: 1 !important; transform: none !important; }
+
+/* Dark mode is a true workspace palette, not an inversion of the light skin.
+   This block deliberately follows the light rules above: the app ships several
+   legacy dark selectors, while this file owns the Evolute-specific surfaces. */
+body.dark {
+  --ev-canvas: #171d2c;
+  --ev-surface: #0d1220;
+  --ev-surface-soft: #111827;
+  --ev-hairline: #293244;
+  --ev-hairline-strong: #3b465c;
+  --ev-ink: #f4f6fb;
+  --ev-charcoal: #e4e8f2;
+  --ev-slate: #aab4c7;
+  --ev-steel: #8c98ad;
+  --ev-lavender: #27234a;
+  --ev-sky: #172d4a;
+  --ev-mint: #15382f;
+  --ev-peach: #442d21;
+  --ev-rose: #41223a;
+  --ev-yellow: #3a3218;
+  --primary-100: #211d42;
+  --primary-200: #2a2653;
+  --primary-300: #bcb2ff;
+  --primary-500: #8d7ce3;
+  --primary-600: #9b8cff;
+  --primary-700: #b9adff;
+  --primary-800: #d5ceff;
+  color: var(--ev-charcoal) !important;
+  background: var(--ev-surface) !important;
+}
+
+body.dark #sidebar,
+body.dark #sidebarFlyout {
+  background: var(--ev-surface-soft) !important;
+  border-color: var(--ev-hairline) !important;
+}
+body.dark #sidebar .oh-sidebar__company-title,
+body.dark #sidebar .sidebar-version,
+body.dark #sidebar .oh-sidebar-label,
+body.dark #sidebar .sidebar-chevron { color: var(--ev-charcoal) !important; }
+body.dark #sidebar .oh-sidebar__company-link,
+body.dark #sidebar #sidebarPinBtn { color: var(--ev-steel) !important; }
+body.dark #sidebar .sideboxmain:hover:not(.sidebox-current),
+body.dark #sidebar .sideboxmain.sidebox-active:not(.sidebox-current),
+body.dark #sidebar .sidebar-subnav-link:hover { background: #20283a !important; }
+body.dark #sidebar .sideboxmain:hover:not(.sidebox-current) .oh-sidebar-label,
+body.dark #sidebar .sideboxmain.sidebox-active:not(.sidebox-current) .oh-sidebar-label,
+body.dark #sidebar .sidebar-subnav-link:hover { color: var(--primary-300) !important; }
+body.dark #sidebar .sideboxmain.sidebox-current,
+body.dark #sidebar .oh-sidebar-active-link { background: var(--ev-primary) !important; }
+body.dark #sidebar nav .sideboxmain img,
+body.dark #sidebar nav .sideboxmain svg:not(.sidebar-chevron) { filter: brightness(0) invert(1) !important; opacity: .72 !important; }
+body.dark #sidebar nav .sideboxmain.sidebox-current img,
+body.dark #sidebar nav .sideboxmain.sidebox-current svg:not(.sidebar-chevron) { opacity: 1 !important; }
+
+body.dark .oh-main-content,
+body.dark .md-dashboard { background: var(--ev-surface) !important; }
+body.dark .oh-main-header { background: rgba(17, 24, 39, .94) !important; border-color: var(--ev-hairline) !important; }
+body.dark .oh-main-header .bg-primary-100 { background: #20283a !important; border-color: var(--ev-hairline-strong) !important; color: var(--primary-300) !important; }
+body.dark .oh-main-header .bg-primary-100:hover { background: var(--ev-primary) !important; color: #fff !important; }
+
+body.dark .oh-btn--light-bkg,
+body.dark .oh-btn--light,
+body.dark .oh-btn--secondary-outline,
+body.dark .md-header #md-open-customize { background: #20283a !important; border-color: var(--ev-hairline-strong) !important; color: var(--ev-charcoal) !important; }
+body.dark .oh-btn--light-bkg:hover,
+body.dark .oh-btn--light:hover,
+body.dark .oh-btn--secondary-outline:hover,
+body.dark .md-header #md-open-customize:hover { background: var(--ev-lavender) !important; border-color: var(--primary-500) !important; }
+body.dark .bg-brand-600 { background: var(--ev-primary) !important; }
+body.dark .bg-brand-600:hover { background: var(--ev-primary-pressed) !important; }
+body.dark .oh-input,
+body.dark .oh-select,
+body.dark input:not([type="checkbox"]):not([type="radio"]),
+body.dark select,
+body.dark textarea { background: #111827 !important; color: var(--ev-charcoal) !important; border-color: var(--ev-hairline-strong) !important; }
+body.dark input::placeholder,
+body.dark textarea::placeholder { color: var(--ev-steel) !important; }
+
+body.dark .oh-card,
+body.dark .oh-profile-section,
+body.dark .oh-modal__dialog,
+body.dark .oh-tabs__content,
+body.dark .sidebarModal,
+body.dark .oh-sticky-table,
+body.dark .oh-table,
+body.dark .list-table,
+body.dark .md-header,
+body.dark .md-chart-card,
+body.dark .md-info-panel,
+body.dark .md-customize-panel { background: var(--ev-canvas) !important; border-color: var(--ev-hairline) !important; }
+body.dark .oh-sticky-table thead th,
+body.dark .oh-table thead th,
+body.dark .list-table .list-table-header,
+body.dark .oh-tabs__movable-header,
+body.dark .md-cust-item { background: var(--ev-surface-soft) !important; color: var(--ev-slate) !important; border-color: var(--ev-hairline) !important; }
+body.dark .oh-sticky-table td,
+body.dark .oh-table td,
+body.dark .list-table .list-table-row,
+body.dark .oh-titlebar,
+body.dark .oh-main__titlebar,
+body.dark .md-info-panel__header,
+body.dark .md-customize-panel__header,
+body.dark .md-customize-panel__footer { border-color: var(--ev-hairline) !important; }
+
+body.dark .md-header,
+body.dark .md-header h1,
+body.dark .md-kpi-card__value,
+body.dark .md-chart-card__title,
+body.dark .md-info-panel__title,
+body.dark .hcl-title,
+body.dark .hcl-action-title { color: var(--ev-ink) !important; }
+body.dark .md-header__date,
+body.dark .md-header .md-refresh,
+body.dark .md-kpi-card__label,
+body.dark .md-chart-card__subtitle,
+body.dark .md-section-divider,
+body.dark .md-empty,
+body.dark .md-info-panel__empty,
+body.dark .hcl-subtitle,
+body.dark .hcl-action-desc,
+body.dark .hcl-label-pending { color: var(--ev-slate) !important; }
+body.dark .md-company-chip,
+body.dark .md-badge { background: #20283a !important; border-color: var(--ev-hairline-strong) !important; color: var(--ev-charcoal) !important; }
+body.dark .md-kpi-card { border-color: var(--ev-hairline) !important; }
+body.dark .md-kpi-card:nth-child(1) { background: #242043 !important; }
+body.dark .md-kpi-card:nth-child(2) { background: #15382f !important; }
+body.dark .md-kpi-card:nth-child(3) { background: #442d21 !important; }
+body.dark .md-kpi-card:nth-child(4) { background: #172d4a !important; }
+body.dark .md-kpi-card__icon,
+body.dark .md-badge { background: rgba(255, 255, 255, .10) !important; }
+body.dark .md-kpi-card__sub { color: var(--ev-charcoal) !important; opacity: .78 !important; }
+body.dark .md-dashboard .apexcharts-xaxis text,
+body.dark .md-dashboard .apexcharts-yaxis text,
+body.dark .md-dashboard .apexcharts-legend-text { fill: var(--ev-slate) !important; }
+
+body.dark .hcl-banner { border-color: #6b5e21 !important; background: linear-gradient(135deg, #332d16 0%, #1b2230 58%, var(--ev-canvas) 100%) !important; }
+body.dark .hcl-line-inactive { background: rgba(170, 180, 199, .28) !important; }
+body.dark .hcl-circle-pending { border-color: var(--ev-hairline-strong) !important; background: var(--ev-canvas) !important; }
+body.dark .hcl-label-active { color: var(--ev-ink) !important; }
+body.dark .hcl-action { background: rgba(17, 24, 39, .72) !important; border-color: rgba(155, 140, 255, .46) !important; }
+
+@media (max-width: 900px) {
+  #ohMainContent { padding: 84px 16px 24px !important; }
+  .md-dashboard { margin: -16px !important; padding: 16px !important; }
+  .md-header { min-height: 110px; margin: -16px -16px 20px !important; padding: 22px 20px !important; }
+  .md-header__actions { margin-top: 12px; }
+}
+@media (max-width: 680px) {
+  .md-header { display: block !important; }
+  .md-kpi-grid, .md-chart-grid { grid-template-columns: 1fr !important; }
+  .md-chart-card--wide, .md-section-divider { grid-column: span 1 !important; }
+}

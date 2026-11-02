@@ -124,42 +124,7 @@ class NoSchedulerStartsAtImportTests(SimpleTestCase):
         call_command("run_scheduler", "--list")
 
 
-class DeploymentWiringTests(SimpleTestCase):
-    """
-    The scheduler refactor moved jobs out of gunicorn workers into one
-    process, but nothing started that process: run_scheduler appeared in no
-    compose file, so every registered job ran zero times on the shipped
-    stack. These pin the wiring, since a correct runner nothing launches is
-    indistinguishable from no runner.
-    """
-
-    def _compose(self, name):
-        from pathlib import Path
-
-        from django.conf import settings
-
-        return (Path(settings.BASE_DIR) / name).read_text(encoding="utf-8")
-
-    def test_dev_compose_defines_a_scheduler_service(self):
-        body = self._compose("docker-compose.yml")
-        self.assertIn("scheduler:", body)
-        self.assertIn("run_scheduler", body)
-
-    def test_prod_compose_defines_a_scheduler_service(self):
-        body = self._compose("docker-compose.prod.yml")
-        self.assertIn("scheduler:", body)
-
-    def test_scheduler_skips_release_tasks(self):
-        """Both containers would otherwise race migrate, and
-        collectstatic --clear would wipe STATIC_ROOT under the live web
-        container."""
-        for name in ("docker-compose.yml", "docker-compose.prod.yml"):
-            with self.subTest(compose=name):
-                self.assertIn("HORILLA_SKIP_RELEASE_TASKS", self._compose(name))
-
-    def test_prod_scheduler_is_single_replica(self):
-        """Two schedulers reintroduce the duplicate-run problem."""
-        self.assertIn("replicas: 1", self._compose("docker-compose.prod.yml"))
+class RuntimeWiringTests(SimpleTestCase):
 
     def test_ci_does_not_override_the_coverage_floor(self):
         """The Makefile's floor is the gate; passing a lower value at the
